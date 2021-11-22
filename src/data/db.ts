@@ -50,4 +50,4 @@ class DB {
     }
 }
 
-module.exports = new DB;
+export default new DB;

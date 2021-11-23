@@ -1,11 +1,11 @@
-import mysql from "mysql";
+import mysql2, { RowDataPacket } from "mysql2";
 import { Constants } from '../utils/constants';
 
 class DB {
-    db: mysql.Pool;
+    db: mysql2.Pool;
 
     constructor() {
-        this.db = mysql.createPool({
+        this.db = mysql2.createPool({
             host: Constants.DB_HOST,
             user: Constants.DB_USER,
             password: Constants.DB_PASS,
@@ -34,8 +34,8 @@ class DB {
         });
     }
 
-    query = async (sql: string, values: any): Promise<mysql.QueryFunction> => {
-        return new Promise<mysql.QueryFunction>((resolve, reject) => {
+    query = async (sql: string, values: any | undefined): Promise<mysql.QueryFunction> => {
+        return new Promise<mysql2.RowDataPacket>((resolve, reject) => {
             const callback = (err: mysql.MysqlError | null, result: mysql.QueryFunction) => {
                 if (err) {
                     reject(err);

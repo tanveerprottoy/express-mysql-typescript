@@ -9,7 +9,7 @@ class DB {
             host: Constants.DB_HOST,
             user: Constants.DB_USER,
             password: Constants.DB_PASS,
-            database: Constants.DB_DATABASE
+            database: Constants.DB_NAME
         });
         this.checkConnection();
     }
@@ -34,9 +34,9 @@ class DB {
         });
     }
 
-    query = async (sql: string, values: any | undefined): Promise<mysql.QueryFunction> => {
-        return new Promise<mysql2.RowDataPacket>((resolve, reject) => {
-            const callback = (err: mysql.MysqlError | null, result: mysql.QueryFunction) => {
+    query = async (sql: string, values: any | undefined): Promise<mysql2.RowDataPacket[]> => {
+        return new Promise<mysql2.RowDataPacket[]>((resolve, reject) => {
+            const callback = (err: mysql2.QueryError | null, result: mysql2.RowDataPacket[], fields: mysql2.FieldPacket[]) => {
                 if (err) {
                     reject(err);
                     return;
@@ -45,7 +45,7 @@ class DB {
             }
             this.db.query(sql, values, callback);
         }).catch(error => {
-            throw Error;
+            throw Error();
         });
     }
 }

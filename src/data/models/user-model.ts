@@ -1,4 +1,4 @@
-import { RowDataPacket, createPool } from 'mysql2';
+import { RowDataPacket } from 'mysql2';
 import DB from '../db';
 
 class UserModel {

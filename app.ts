@@ -8,8 +8,6 @@ const port = 8080;
 
 // enabling cors for all requests by using cors middleware
 app.use(cors())
-// Enable pre-flight
-// app.options("*", cors());
 // parse requests of content-type: application/json
 // parses incoming requests with JSON payloads
 app.use(express.json())
@@ -18,7 +16,7 @@ app.use(express.urlencoded({
     extended: true
 }))
 
-app.use(Constants.API + Constants.VERSION_1 + '/auth', userRouter)
+app.use(Constants.API + Constants.VERSION_1 + '/users', userRouter)
 
 app.listen(port, () => {
     console.log(`server started at http://localhost:${port}`);

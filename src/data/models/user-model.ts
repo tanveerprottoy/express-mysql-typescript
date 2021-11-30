@@ -5,12 +5,18 @@ class UserModel {
     tableName = 'users';
 
     getAll = async (): Promise<RowDataPacket[] | undefined> => {
-        const sql = `SELECT * FROM ${this.tableName} WHERE role = 1`;
-        const result = await DB.query(sql, []);
-        if (result) {
-            return result;
+        try {
+            const sql = `SELECT * FROM ${this.tableName} WHERE id > 0`;
+            const result = await DB.query(sql, []);
+            if (result) {
+                return result;
+            }
+            return undefined;
         }
-        return undefined;
+        catch (error: any) {
+            console.log(error);
+            return undefined;
+        }
     }
 }
 

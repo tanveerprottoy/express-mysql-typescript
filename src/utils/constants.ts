@@ -7,7 +7,7 @@ export const Constants = {
     DB_HOST: 'localhost',
     DB_USER: 'root',
     DB_PASS: 'root',
-    DB_NAME: 'kabbik',
+    DB_NAME: 'generic',
     BAD_REQ: 'Bad request',
     UNAUTH_REQ: 'Unauthorized',
     NOT_FOUND: 'Not found',

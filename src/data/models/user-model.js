@@ -6,7 +6,7 @@ class UserModel {
     tableName = 'users';
 
     getAll = async () => {
-        const sql = `SELECT * FROM ${this.tableName} WHERE role = 1`;
+        const sql = `SELECT * FROM ${this.tableName}`;
         const result = await DB.query(sql);
         if (result) {
             return result;
@@ -34,21 +34,6 @@ class UserModel {
             const results = await DB.query(sql, [id, this.tableName]);
             if (results) {
                 // sp returns extra data 2d array, need the first one
-                return results[0][0];
-            }
-            return undefined;
-        }
-        catch (e) {
-            LoggerError.log(e)
-            return undefined;
-        }
-    }
-
-    findByUserNameRole = async (userName, role) => {
-        const sql = 'CALL find_by_username_role(?, ?)';
-        try {
-            const results = await DB.query(sql, [userName, role]);
-            if (results) {
                 return results[0][0];
             }
             return undefined;

@@ -1,11 +1,11 @@
-import mysql from "mysql";
+import mysql2 from "mysql2";
 import { Constants } from '../utils/constants';
 
-class DB {
-    db: mysql.Pool;
+class DB2 {
+    db: mysql2.Pool;
 
     constructor() {
-        this.db = mysql.createPool({
+        this.db = mysql2.createPool({
             host: Constants.DB_HOST,
             user: Constants.DB_USER,
             password: Constants.DB_PASS,
@@ -15,7 +15,7 @@ class DB {
     }
 
     checkConnection(): void {
-        this.db.getConnection((err: any, connection: any) => {
+        this.db.getConnection((err, connection) => {
             if(err) {
                 if(err.code === 'PROTOCOL_CONNECTION_LOST') {
                     console.error('Database connection was closed.');
@@ -30,13 +30,13 @@ class DB {
             if(connection) {
                 connection.release();
             }
-            return;
+            return
         });
     }
 
-    execute = async <T>(sql: string, values: string | object | null): Promise<T> => {
-        return new Promise<T>((resolve, reject) => {
-            const callback = (err: mysql.MysqlError | null, result: T) => {
+    execute = async (sql: string, values: any | undefined): Promise<mysql2.RowDataPacket[]> => {
+        return new Promise<mysql2.RowDataPacket[]>((resolve, reject) => {
+            const callback = (err: mysql2.QueryError | null, result: mysql2.RowDataPacket[], fields: mysql2.FieldPacket[]) => {
                 if(err) {
                     reject(err);
                     return;
@@ -54,4 +54,4 @@ class DB {
     }
 }
 
-export default new DB;
+export default new DB2;

@@ -1,7 +1,7 @@
 import express from 'express';
-import UserModel from '../data/models/user-model';
-import ResponseUtils from '../utils/response-utils';
-import { Constants } from '../utils/constants';
+import UsersRepository from './users-repository';
+import ResponseUtils from '../../utils/response-utils';
+import { Constants } from '../../utils/constants';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -12,12 +12,12 @@ class UserController {
         res: express.Response,
         next: express.NextFunction
     ): Promise<express.Response> => {
-        let userList = await UserModel.getAll();
-        if (!userList) {
-            return ResponseUtils.respondError(
+        let userList = await UsersRepository.getAll();
+        if(!userList) {
+            return ResponseUtils.respond(
                 res,
-                 Constants.HTTP_404,
-                 Constants.NOT_FOUND
+                Constants.HTTP_200,
+                []
             );
         }
         return ResponseUtils.respond(
